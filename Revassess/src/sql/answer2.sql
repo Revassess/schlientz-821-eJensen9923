@@ -1,0 +1,1 @@
+INSERT INTO APP_USER VALUES (123, 'asdf', 'asdf', 'asdf', 'asdf', 4);
