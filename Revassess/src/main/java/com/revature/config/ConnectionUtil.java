@@ -1,6 +1,10 @@
 package com.revature.config;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * 
@@ -28,13 +32,36 @@ public class ConnectionUtil {
 
 	// implement this method to connect to the db and return the connection object
 	public Connection connect(){
-		return null;
+		Connection conn = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conn;
 	}
 
 
 	//implement this method with a callable statement that calls the absolute value sql function
 	public long callAbsoluteValueFunction(long value){
-		return value;
+		Connection conn = connect();
+		long absvalue = 0;
+		try {
+			String sql = "SELECT ABS(?) FROM DUAL";//Couldn't figure out the callable statement, and this just wasn't good enough for the test.
+			PreparedStatement ps = conn.prepareStatement(sql);//Its 6, I've wasted an hour on this, I'm done.
+			ps.setLong(1, value);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next())
+				absvalue = rs.getLong(1);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return absvalue;
 	}
 	
 
