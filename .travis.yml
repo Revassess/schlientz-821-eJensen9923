@@ -6,4 +6,4 @@ script: ./build.sh
 notifications:
     email:
     #enter your email address below
-        - eric.jensen@revature.com
+        - eric.jensen@revature.net
